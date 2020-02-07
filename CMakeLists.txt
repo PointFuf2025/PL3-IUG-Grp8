@@ -57,6 +57,9 @@ add_custom_target(headers SOURCES ${include_files})
 # target to generate libei
 set(EI_SRC
         src/ei_draw.cpp
+        src/frame.cpp
+        src/button.cpp
+        src/toplevel.cpp
         )
 add_library(ei ${EI_SRC})
 

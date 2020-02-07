@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/minimal.dir/minimal.cpp.o  -o minimal  -L/net/cremi/vho/PL3-IUG-Grp8/lib/_x11 -Wl,-rpath,/net/cremi/vho/PL3-IUG-Grp8/lib/_x11 -rdynamic ../libei.a -leibase -lallegro -lallegro_image -lallegro_color -lallegro_font -lallegro_ttf -lallegro_primitives -lm 
