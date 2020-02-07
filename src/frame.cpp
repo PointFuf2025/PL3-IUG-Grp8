@@ -1,4 +1,11 @@
-#include <widget.h>
+#include <ei_widget.h>
+
+#include "ei_draw.h"
+#include "ei_types.h"
+
+#include <functional>
+
+using namespace ei;
 
 class Frame : public Widget
 {
@@ -13,15 +20,15 @@ public:
                        Rect*     clipper);
 
 protected:
-    relief_t    relief;
-    char**        text;
-    font_t      text_font;
-    color_t     text_color;
-    anchor_t    text_anchor;
-    surface_t   img;
-    Rect        img_rect;
-    anchor_t    img_anchor;
-    int         border_width;
+    relief_t    _relief;
+    char**        _text;
+    font_t      _text_font;
+    color_t     _text_color;
+    anchor_t    _text_anchor;
+    surface_t   _img;
+    Rect        **_img_rect;
+    anchor_t    _img_anchor;
+    int         _border_width;
 
     /**
      * @brief   Configures the attributes of widgets of the class "frame".
@@ -72,30 +79,24 @@ protected:
                     Rect**          img_rect,
                     anchor_t*       img_anchor){
 
-       pick_color = (color == nullptr)? ei_default_background_color : *color;
-       this->border_width = border_width == nullptr? 0 : border_width;
+       pick_color = (color == nullptr)? default_background_color : *color;
+       _border_width = border_width == nullptr? 0 : *border_width;
 
        if(text == nullptr){
-           this->text = nullptr;
-           this->text_font = nullptr;
-           this->text_anchor=nullptr;
-           this->text_color = nullptr;
+           _text = nullptr;
+
        }
        else{
-           this->text = text;
-           this->text_font = text_font == nullptr? ei_default_font : *text_font;
-           this->text_color = text_color == nullptr? ei_font_default_color : *text_color;
-           this->text_anchor = text_anchor == nullptr? ei_anc_center : *text_anchor;
+           _text = text;
+           _text_font = text_font == nullptr? default_font : *text_font;
+           _text_color = text_color == nullptr? font_default_color : *text_color;
+           _text_anchor = text_anchor == nullptr? ei_anc_center : *text_anchor;
        }
 
-       if(img == nullptr){
-           this->img_rect = nullptr;
-           this->anchor = nullptr;
-       }
-       else{
-           this->img = img;
-           this->img_rect = img_rect ;
-           this->img_anchor = img_anchor == nullptr? ei_anc_center : *img_anchor;
+       if(img != nullptr){
+           _img = img;
+           _img_rect = img_rect ;
+           _img_anchor = img_anchor == nullptr? ei_anc_center : *img_anchor;
        }
     }
 };
