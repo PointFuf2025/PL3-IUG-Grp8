@@ -116,6 +116,10 @@ public:
         return !(*this == p);
     }
 
+    bool empty () {
+        return (value[0]==(T)NULL && value[1]==(T)NULL) ;
+    }
+
 protected:
     T value[2];
 };
