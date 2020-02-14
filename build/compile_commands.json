@@ -1,0 +1,55 @@
+[
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o CMakeFiles/ei.dir/src/ei_draw.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/ei_draw.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/ei_draw.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o CMakeFiles/ei.dir/src/frame.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/frame.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/frame.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o CMakeFiles/ei.dir/src/button.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/button.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/button.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o CMakeFiles/ei.dir/src/toplevel.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/toplevel.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/src/toplevel.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -DUSE_CATCH -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o tests/CMakeFiles/unit_tests.dir/unit_tests.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/unit_tests.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/unit_tests.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o tests/CMakeFiles/minimal.dir/minimal.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/minimal.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/minimal.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o tests/CMakeFiles/frame.dir/frame.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/frame.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/frame.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o tests/CMakeFiles/toplevel.dir/toplevel.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/toplevel.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/toplevel.cpp"
+},
+
+{
+  "directory": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build",
+  "command": "/usr/bin/g++-6   -DDATA_DIR=\"\\\"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/data/\\\"\" -I/usr/include/x86_64-linux-gnu -I../include  -g   -std=gnu++11 -o tests/CMakeFiles/button.dir/button.cpp.o -c \"/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/button.cpp\"",
+  "file": "/net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/tests/button.cpp"
+}
+]

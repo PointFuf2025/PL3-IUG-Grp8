@@ -1,0 +1,13 @@
+PROJECT_NAME           = "ProjetTechnoL3"
+PROJECT_NUMBER         = 0.0.1
+STRIP_FROM_PATH        = /net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8 \
+                         /net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build
+INPUT                  =  \
+                         /net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8 \
+                         /net/cremi/encarre/Bureau/Projet tech/PL3-IUG-Grp8/build
+FILE_PATTERNS          = *.h \
+                         *.c \
+                         *.cpp \
+                         *.md
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = 
