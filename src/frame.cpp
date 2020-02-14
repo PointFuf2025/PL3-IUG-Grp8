@@ -154,7 +154,9 @@ protected:
                 }
         }
 
-         //pas encore gérer draw pour les enfants
+        for(Widget* w : children) {
+            w->draw();
+        }
 
         }
 
