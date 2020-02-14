@@ -99,6 +99,11 @@ public:
 
 private:
     static Application *instance;
+protected:
+    Frame* root_widget;
+    linked_rect_t rect_to_update;
+    bool_t running;
+
 };
 
 }
