@@ -144,7 +144,7 @@ public:
      *                          appearance depends on the "relief" parameter. Defaults to 0.
      * @param   relief      Appearance of the border of the widget. Defaults to \ref ei_relief_none.
      * @param   text        The text to display in the widget, or NULL. Only one of the
-     *                      parameterhttps://github.com/PointFuf2025/PL3-IUG-Grp8.git "text" and "img" should be used (i.e. non-NULL). Defaults
+     *                      parameter "text" and "img" should be used (i.e. non-NULL). Defaults
      *                      to NULL.
      * @param   text_font   The font used to display the text. Defaults to \ref ei_default_font.
      * @param   text_color  The color used to display the text. Defaults to
