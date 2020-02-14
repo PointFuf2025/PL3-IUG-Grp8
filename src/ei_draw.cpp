@@ -433,4 +433,25 @@ void ei_copy_surface(surface_t destination, const surface_t source,
     al_draw_bitmap((ALLEGRO_BITMAP*) source, where->x(), where->y(), 0);
 }
 
+/**
+ * @brief Clippe the sub-surface of the source and copy it to the destination
+ * @param destination
+ * @param source
+ * @param size_clipped: Size of the clipped surface
+ * @param where: where to draw
+ * @param use_alpha
+ */
+
+void ei_copy_subsurface(surface_t destination, const surface_t source, Point* where,
+                     Size size_clipped, const bool_t use_alpha)
+{
+    if(use_alpha == EI_TRUE)
+        al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+    else
+        al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_ZERO);
+    al_set_target_bitmap((ALLEGRO_BITMAP*) destination);
+    al_set_clipping_rectangle(where->x(), where->y(), size_clipped.width(), size_clipped.height());
+    al_draw_bitmap((ALLEGRO_BITMAP*) source, where->x(), where->y(), 0);
+}
+
 }

@@ -171,7 +171,7 @@ public:
                     color_t*        text_color,
                     anchor_t*       text_anchor,
                     surface_t*      img,
-                    Rect**          img_rect,
+                    Rect*           img_rect,
                     anchor_t*       img_anchor);
 
 
@@ -182,7 +182,7 @@ protected:
     color_t     _text_color;
     anchor_t    _text_anchor;
     surface_t   _img;
-    Rect        **_img_rect;
+    Rect        _img_rect;
     anchor_t    _img_anchor;
     int         _border_width;
 

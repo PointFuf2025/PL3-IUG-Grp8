@@ -15,19 +15,18 @@ public:
 
     virtual ~Frame();
 
-    virtual void draw (surface_t surface,
+    /*virtual void draw (surface_t surface,
                        surface_t pick_surface,
                        Rect*     clipper);
-
+*/
 protected:
     relief_t    _relief;
     char**        _text;
     font_t      _text_font;
     color_t     _text_color;
-    anchor_t    _text_anchor;
+    anchor_t    _anchor;
     surface_t   _img;
-    Rect        **_img_rect;
-    anchor_t    _img_anchor;
+    Rect        _img_rect;
     int         _border_width;
 
     /**
@@ -76,11 +75,12 @@ protected:
                     color_t*        text_color,
                     anchor_t*       text_anchor,
                     surface_t*      img,
-                    Rect**          img_rect,
+                    Rect*          img_rect,
                     anchor_t*       img_anchor){
 
        pick_color = (color == nullptr)? default_background_color : *color;
        _border_width = border_width == nullptr? 0 : *border_width;
+
 
        if(text == nullptr){
            _text = nullptr;
@@ -90,13 +90,73 @@ protected:
            _text = text;
            _text_font = text_font == nullptr? default_font : *text_font;
            _text_color = text_color == nullptr? font_default_color : *text_color;
-           _text_anchor = text_anchor == nullptr? ei_anc_center : *text_anchor;
+           _anchor = text_anchor == nullptr? ei_anc_center : *text_anchor;
        }
 
        if(img != nullptr){
            _img = img;
-           _img_rect = img_rect ;
-           _img_anchor = img_anchor == nullptr? ei_anc_center : *img_anchor;
+           _img_rect = *img_rect ;
+           _anchor = img_anchor == nullptr? ei_anc_center : *img_anchor;
        }
     }
+
+    void draw (surface_t surface,
+                           surface_t pick_surface,
+                           Rect*     clipper){
+        Point test = Point();
+        surface_t s_text;
+        s_text = hw_text_create_surface(*(_text), _text_font, &_text_color);
+        Size stext_size = hw_surface_get_size(s_text);
+        switch (_anchor) {
+        case ei_anc_none:
+            break;
+        case ei_anc_center:
+            test = Point(requested_size.width() - stext_size.width()/2, requested_size.height()- stext_size.height()/2);
+            break;
+        case ei_anc_north:
+            test = Point(requested_size.width()-stext_size.width()/2, 0);
+            break;
+        case ei_anc_northeast:
+            test = Point(requested_size.width() - stext_size.width(), 0);
+            break;
+        case ei_anc_northwest:
+            test = Point(0, 0);
+            break;
+        case ei_anc_east:
+            test = Point(requested_size.width() - stext_size.width(), requested_size.height() - stext_size.height()/2);
+            break;
+        case ei_anc_south:
+            test = Point(requested_size.width() - stext_size.width()/2, requested_size.height()-stext_size.height());
+            break;
+        case ei_anc_southeast:
+            test = Point(requested_size.width() - stext_size.width(), requested_size.height()-stext_size.height());
+            break;
+        case ei_anc_southwest:
+            test = Point(0, requested_size.height() - stext_size.width());
+            break;
+        case ei_anc_west:
+            test = Point(0, requested_size.height()-stext_size.height()/2);
+            break;
+        }
+
+        if(_text != NULL){
+            if(clipper==NULL)
+                draw_text(surface, &test, *(_text), _text_font, &_text_color);
+            else{
+                ei_copy_subsurface(surface, s_text, &test , clipper->size, EI_TRUE );
+            }
+        }
+        if(&_img != NULL){
+            if(clipper==NULL)
+                ei_copy_surface(surface, _img, &test, EI_TRUE);
+            else{
+                ei_copy_subsurface(surface, _img, &test, clipper->size, EI_TRUE);
+                }
+        }
+
+         //pas encore gérer draw pour les enfants
+
+        }
+
+
 };

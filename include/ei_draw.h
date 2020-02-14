@@ -118,5 +118,8 @@ void fill(surface_t surface, const color_t* color, const bool_t use_alpha);
 void ei_copy_surface(surface_t destination, const surface_t source,
                      const Point* where, const bool_t use_alpha);
 
+void ei_copy_subsurface(surface_t destination, const surface_t source, Point* where,
+                     Size size_clipped, const bool_t use_alpha);
+
 }
 #endif
