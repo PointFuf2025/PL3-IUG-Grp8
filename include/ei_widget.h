@@ -202,6 +202,20 @@ public:
     virtual void draw (surface_t surface,
                        surface_t pick_surface,
                        Rect*     clipper);
+                       
+protected:
+        Size*            requested_size,
+        const color_t*   color,
+        int*             border_width,
+        int*             corner_radius,
+        relief_t*        relief,
+        const char **    text,
+        font_t*          text_font,
+        color_t*         text_color,
+        anchor_t*        text_anchor,
+        surface_t*       img,
+        Rect**           img_rect,
+        anchor_t*        img_anchor);
 
     /**
      * @brief   Configures the attributes of widgets of the class "button".
@@ -226,6 +240,8 @@ public:
                     surface_t*       img,
                     Rect**           img_rect,
                     anchor_t*        img_anchor);
+
+    
 };
 
 
@@ -266,6 +282,14 @@ public:
                     bool_t*         closable,
                     axis_set_t*     resizable,
                     Size*           min_size);
+private :
+    Size requested_size ;
+    int _border_with ;
+    const char *_title ;
+    bool_t _closable ;
+    axis_set_t _resizable ;
+    Size _min_size ;
+
 };
 
 }
