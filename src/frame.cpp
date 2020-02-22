@@ -1,33 +1,9 @@
 #include <ei_widget.h>
 
-#include "ei_draw.h"
-#include "ei_types.h"
 
 #include <functional>
 
-using namespace ei;
-
-class Frame : public Widget
-{
-public:
-
-    Frame(Widget* parent);
-
-    virtual ~Frame();
-
-    /*virtual void draw (surface_t surface,
-                       surface_t pick_surface,
-                       Rect*     clipper);
-*/
-protected:
-    relief_t    _relief;
-    char**        _text;
-    font_t      _text_font;
-    color_t     _text_color;
-    anchor_t    _anchor;
-    surface_t   _img;
-    Rect        _img_rect;
-    int         _border_width;
+namespace ei{
 
     /**
      * @brief   Configures the attributes of widgets of the class "frame".
@@ -66,7 +42,7 @@ protected:
      *                      when the size of the widget is bigger than the size of the image.
      *                      De  de  n’utiliser  qu’une  sous-partie  de  l’image, faults to \ref ei_anc_center.
      */
-    void configure (Size*           requested_size,
+    void Frame::configure (Size*           requested_size,
                     const color_t*  color,
                     int*            border_width,
                     relief_t*       relief,
@@ -100,7 +76,7 @@ protected:
        }
     }
 
-    void draw (surface_t surface,
+    void Frame::draw (surface_t surface,
                            surface_t pick_surface,
                            Rect*     clipper){
         Point test = Point();
@@ -155,10 +131,8 @@ protected:
         }
 
         for(Widget* w : children) {
-            w->draw();
+            w->draw(surface, pick_surface, clipper);
         }
 
         }
-
-
-};
+}
