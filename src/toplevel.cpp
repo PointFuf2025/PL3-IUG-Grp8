@@ -2,6 +2,7 @@
 
 
 
+
 namespace ei {
 /**
  * @brief   Configures the attributes of widgets of the class "toplevel".
@@ -36,15 +37,16 @@ void Toplevel::configure(Size *requested_size,
     _border_with = border_width==NULL ? 4: *border_width ;
     _title = (title==NULL) ? "Toplevel" : *title;
     _closable = closable==NULL ? EI_TRUE : *closable ;
-//    if (_closable==EI_TRUE) {
-//        children.push_back(this) ;
-//        children[children.size-1].configure(#rajoute les param) ;
-//    }
+    if (_closable==EI_TRUE) {
+        surface_t clos;
+        Size s_clos ;
+        clos = hw_image_load(DATA_DIR"cross.png") ;
+        s_clos = hw_surface_get_size(clos) ;
+        children.push_back(this) ;
+        children[0]->configure(&s_clos, &default_banner_color, NULL, NULL, NULL,
+                                  NULL, NULL, NULL, NULL, NULL, NULL, clos, NULL, NULL);
+    }
     _resizable = (resizable==NULL) ? ei_axis_both : *resizable ;
-//    if (_resizable==EI_TRUE) {
-//        children.push_back(this) ;
-//        children[children.size-1].configure(#rajoute les param) ;
-//    }
     _min_size = min_size->empty() ? Size(160,120) : *min_size ;
 }
 
@@ -70,9 +72,9 @@ void Toplevel::draw(surface_t surface,
         surface_size = hw_surface_get_size(surface) ;
         s_pos.push_front(Point(0,0)) ;
     }
-    s_pos.push_front(Point(s_pos.front().x() + (int)surface_size.x(), s_pos.front().y() )) ;
-    s_pos.push_front(Point(s_pos.front().x(), s_pos.front().y()+ (int)surface_size.y())) ;
-    s_pos.push_front(Point(s_pos.front().x() - (int)surface_size.x(), s_pos.front().y())) ;
+    s_pos.push_front(Point(s_pos.front().x() + (int)surface_size.width(), s_pos.front().y() )) ;
+    s_pos.push_front(Point(s_pos.front().x(), s_pos.front().y()+ (int)surface_size.height())) ;
+    s_pos.push_front(Point(s_pos.front().x() - (int)surface_size.width(), s_pos.front().y())) ;
     draw_polygon(pick_surface,s_pos,pick_color,NULL);
     color_t white = {255,255,255,255} ;
     Point p(0,0) ;
