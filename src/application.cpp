@@ -32,13 +32,15 @@ Application::run()
     //faire une boucle pour actualiser les widget et les redessiner.
     // Wait for a key press.
     while (running == EI_TRUE) {
+        hw_surface_update_rects(rect_to_update);
+        rect_to_update.empty();
         Event* event = hw_event_wait_next();
         if(event->type == ei_ev_keydown)
             quit_request();
     }
 
-    // Free hardware resources.
-    hw_quit();
+
+    ~Application();
 
 
     //dans run il faut parcourir tout les widget et les dessiner une fois, ensuite redessiner que ceux qui sont update en parcourant les enfants
@@ -48,6 +50,18 @@ Application::run()
 Application::quit_request()
 {
     running = EI_FALSE;
+}
+
+Application::invalidate_rect(const Rect &rect)
+{
+    rect_to_update.push_back(rect);
+}
+
+Application::~Application()
+{
+    delete rect_to_update;
+    // Free hardware resources.
+    hw_quit();
 }
 
 }
