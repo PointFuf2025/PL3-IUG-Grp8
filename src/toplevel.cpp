@@ -1,6 +1,5 @@
 #include "ei_widget.h"
-#include <vector_functions.h>
-#include "ei_types.h"
+
 
 
 namespace ei {
@@ -30,16 +29,56 @@ void Toplevel::configure(Size *requested_size,
                     axis_set_t *resizable,
                     Size *min_size) {
 
-//    _border_width = border_width == nullptr? 4 : *border_width;
 
     this->requested_size = requested_size->empty() ? Size(320,240) :
                                                        *requested_size ;
     pick_color = (color == nullptr)? default_background_color : *color;
     _border_with = border_width==NULL ? 4: *border_width ;
-    _title = (title==NULL) ? "top level" : *title;
+    _title = (title==NULL) ? "Toplevel" : *title;
     _closable = closable==NULL ? EI_TRUE : *closable ;
+//    if (_closable==EI_TRUE) {
+//        children.push_back(this) ;
+//        children[children.size-1].configure(#rajoute les param) ;
+//    }
     _resizable = (resizable==NULL) ? ei_axis_both : *resizable ;
+//    if (_resizable==EI_TRUE) {
+//        children.push_back(this) ;
+//        children[children.size-1].configure(#rajoute les param) ;
+//    }
     _min_size = min_size->empty() ? Size(160,120) : *min_size ;
+}
+
+/**
+ * \brief   Method that draws the widget.
+ *
+ * @param   surface     Where to draw the widget. The actual location of the widget in the
+ *                      surface is stored in its "screen_location" field.
+ * @param   pick_surface  Offscreen buffer to draw the widget \ref pick_id
+ * @param   clipper     If not NULL, the drawing is restricted within this rectangle
+ *                      (expressed in the surface reference frame).
+ */
+
+void Toplevel::draw(surface_t surface,
+                    surface_t pick_surface,
+                    Rect *clipper){
+    Size surface_size ;
+    linked_point_t s_pos ;
+    if (clipper!=NULL) {
+        surface_size = clipper->size ;
+        s_pos.push_front(clipper->top_left);
+    }else{
+        surface_size = hw_surface_get_size(surface) ;
+        s_pos.push_front(Point(0,0)) ;
+    }
+    s_pos.push_front(Point(s_pos.front().x() + (int)surface_size.x(), s_pos.front().y() )) ;
+    s_pos.push_front(Point(s_pos.front().x(), s_pos.front().y()+ (int)surface_size.y())) ;
+    s_pos.push_front(Point(s_pos.front().x() - (int)surface_size.x(), s_pos.front().y())) ;
+    draw_polygon(pick_surface,s_pos,pick_color,NULL);
+    color_t white = {255,255,255,255} ;
+    Point p(0,0) ;
+    surface_t s_text = hw_text_create_surface(_title, default_font, &white) ;
+    draw_polygon(surface,s_pos,default_background_color,NULL);
+    ei_copy_surface(surface, s_text, &p, EI_FALSE) ;
 }
 
 }
