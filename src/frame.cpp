@@ -56,7 +56,7 @@ namespace ei{
 
        pick_color = (color == nullptr)? default_background_color : *color;
        _border_width = border_width == nullptr? 0 : *border_width;
-
+        _relief = relief == nullptr? ei_relief_none : *relief ;
 
        if(text == nullptr){
            _text = nullptr;
@@ -83,6 +83,15 @@ namespace ei{
         surface_t s_text;
         s_text = hw_text_create_surface(*(_text), _text_font, &_text_color);
         Size stext_size = hw_surface_get_size(s_text);
+        Point location = screen_location.top_left;
+        Size size = screen_location.size;
+        /*switch(_relief){
+        case ei_relief_raised:
+
+             _border_rect = Rect(Point(location.x()+_border_width, location.y() + _border_width), size);
+             _border_rect.
+    }*/
+
         switch (_anchor) {
         case ei_anc_none:
             break;
