@@ -60,6 +60,7 @@ set(EI_SRC
         src/frame.cpp
         src/button.cpp
         src/toplevel.cpp
+        src/application.cpp
         )
 add_library(ei ${EI_SRC})
 
