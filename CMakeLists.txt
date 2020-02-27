@@ -1,3 +1,4 @@
+
 cmake_minimum_required (VERSION 2.8)
 
 project(ProjetTechnoL3)
@@ -51,6 +52,7 @@ set(include_files
         include/ei_event.h
         include/ei_types.h
         include/hw_interface.h
+
 	)
 add_custom_target(headers SOURCES ${include_files})
 
@@ -60,6 +62,7 @@ set(EI_SRC
         src/frame.cpp
         src/button.cpp
         src/toplevel.cpp
+        src/application.cpp
         )
 add_library(ei ${EI_SRC})
 
