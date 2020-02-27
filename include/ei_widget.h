@@ -11,6 +11,7 @@
 #define EI_WIDGET_H
 
 #include "ei_draw.h"
+#include <vector>
 
 #include <functional>
 
@@ -180,11 +181,11 @@ protected:
     char**        _text;
     font_t      _text_font;
     color_t     _text_color;
-    anchor_t    _text_anchor;
+    anchor_t    _anchor;
     surface_t   _img;
     Rect        _img_rect;
-    anchor_t    _img_anchor;
     int         _border_width;
+    Rect        _border_rect;
 
 };
 
@@ -204,18 +205,18 @@ public:
                        Rect*     clipper);
                        
 protected:
-        Size*            requested_size,
-        const color_t*   color,
-        int*             border_width,
-        int*             corner_radius,
-        relief_t*        relief,
-        const char **    text,
-        font_t*          text_font,
-        color_t*         text_color,
-        anchor_t*        text_anchor,
-        surface_t*       img,
-        Rect**           img_rect,
-        anchor_t*        img_anchor);
+        Size*            requested_size;
+        const color_t*   color;
+        int*             border_width;
+        int*             corner_radius;
+        relief_t*        relief;
+        const char **    text;
+        font_t*          text_font;
+        color_t*         text_color;
+        anchor_t*        text_anchor;
+        surface_t*       img;
+        Rect**           img_rect;
+        anchor_t*        img_anchor;
 
     /**
      * @brief   Configures the attributes of widgets of the class "button".
