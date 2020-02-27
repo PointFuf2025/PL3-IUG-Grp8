@@ -63,24 +63,33 @@ void Toplevel::configure(Size *requested_size,
 void Toplevel::draw(surface_t surface,
                     surface_t pick_surface,
                     Rect *clipper){
-    Size surface_size ;
+    Size surface_size, s_topl_ps = hw_surface_get_size(surface);
     linked_point_t s_pos ;
+
     if (clipper!=NULL) {
         surface_size = clipper->size ;
         s_pos.push_front(clipper->top_left);
     }else{
-        surface_size = hw_surface_get_size(surface) ;
+        surface_size = s_topl_ps ;
         s_pos.push_front(Point(0,0)) ;
     }
     s_pos.push_front(Point(s_pos.front().x() + (int)surface_size.width(), s_pos.front().y() )) ;
     s_pos.push_front(Point(s_pos.front().x(), s_pos.front().y()+ (int)surface_size.height())) ;
     s_pos.push_front(Point(s_pos.front().x() - (int)surface_size.width(), s_pos.front().y())) ;
-    draw_polygon(pick_surface,s_pos,pick_color,NULL);
     color_t white = {255,255,255,255} ;
     Point p(0,0) ;
     surface_t s_text = hw_text_create_surface(_title, default_font, &white) ;
     draw_polygon(surface,s_pos,default_background_color,NULL);
     ei_copy_surface(surface, s_text, &p, EI_FALSE) ;
+    if (_closable==EI_TRUE) {
+        surface_t clos;
+        Size s_clos ;
+        clos = hw_image_load(DATA_DIR"cross.png") ;
+        s_clos = hw_surface_get_size(clos) ;
+        ei_copy_surface(surface, clos, &p, EI_FALSE) ;
+    }
+    fill(pick_surface, &pick_color, EI_FALSE) ;
+
 }
 
 }
