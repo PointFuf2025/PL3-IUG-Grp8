@@ -204,19 +204,7 @@ public:
                        surface_t pick_surface,
                        Rect*     clipper);
                        
-protected:
-        Size*            requested_size;
-        const color_t*   color;
-        int*             border_width;
-        int*             corner_radius;
-        relief_t*        relief;
-        const char **    text;
-        font_t*          text_font;
-        color_t*         text_color;
-        anchor_t*        text_anchor;
-        surface_t*       img;
-        Rect**           img_rect;
-        anchor_t*        img_anchor;
+
 
     /**
      * @brief   Configures the attributes of widgets of the class "button".
@@ -241,6 +229,20 @@ protected:
                     surface_t*       img,
                     Rect**           img_rect,
                     anchor_t*        img_anchor);
+
+protected:
+        Size            _requested_size;
+        const color_t   _color;
+        int             _border_width;
+        int             _corner_radius;
+        relief_t        _relief;
+        const char *     _text;
+        font_t          _text_font;
+        color_t         _text_color;
+        anchor_t        _text_anchor;
+        surface_t       _img;
+        Rect*           _img_rect;
+        anchor_t        _img_anchor;
 
     
 };

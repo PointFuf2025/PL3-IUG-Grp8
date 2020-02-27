@@ -30,7 +30,7 @@ void Button::configure (Size*            requested_size,
                      if(img != nullptr)
                     {
                         _img = img;
-                        _img_rect = **img_rect ;
+                        _img_rect = *img_rect ;
                         _img_anchor = img_anchor == nullptr? ei_anc_center : *img_anchor;
                     }
                     _relief = relief == nullptr? ei_relief_raised : *relief;
