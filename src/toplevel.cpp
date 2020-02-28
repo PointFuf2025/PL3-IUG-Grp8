@@ -43,8 +43,8 @@ void Toplevel::configure(Size *requested_size,
         clos = hw_image_load(DATA_DIR"cross.png") ;
         s_clos = hw_surface_get_size(clos) ;
         children.push_back(this) ;
-        children[0]->configure(&s_clos, &default_banner_color, NULL, NULL, NULL,
-                                  NULL, NULL, NULL, NULL, NULL, NULL, clos, NULL, NULL);
+//        children[0]->configure(&s_clos, &default_banner_color, NULL, NULL, NULL,
+//                                  NULL, NULL, NULL, NULL, NULL, NULL, clos, NULL, NULL);
     }
     _resizable = (resizable==NULL) ? ei_axis_both : *resizable ;
     _min_size = min_size->empty() ? Size(160,120) : *min_size ;

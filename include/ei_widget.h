@@ -86,6 +86,11 @@ public:
         screen_location.size = s ;
         screen_location.top_left = p ;
     }
+    widgetclass_name_t getName()
+    {
+        return name;
+    }
+
 
 protected:
     widgetclass_name_t name; ///< The string name of this class of widget.
@@ -242,6 +247,17 @@ public:
                     surface_t*       img,
                     Rect**           img_rect,
                     anchor_t*        img_anchor);
+
+    relief_t getRelief()
+    {
+        return _relief;
+    }
+    void setRelief(relief_t relief)
+    {
+        _relief = relief;
+    }
+    Button operator = (Button b) ;
+
 
 protected:
         Size            _requested_size;

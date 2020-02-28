@@ -66,4 +66,43 @@ void Button::draw(surface_t surface,
             pos.y() += (clipper->size.height() - _requested_size.height()) / 2.f;
             draw_text(surface, &pos, _text, _text_font, &_text_color);
             }
+
+Button Button::operator =(Button button) {
+    name = button.name ;
+    pick_id = button.pick_id ;
+    pick_color = button.pick_color ;
+    parent = button.parent ;
+    children = button.children ;
+    geom_manager = button.geom_manager ;
+    requested_size = button.requested_size ;
+    screen_location = button.screen_location ;
+    content_rect = button.content_rect ;
+    _requested_size = button._requested_size;
+//    _color = button._color;
+    _border_width;
+    _corner_radius;
+    _relief;
+     _text;
+    _text_font;
+    _text_color;
+    _text_anchor;
+    _img;
+    _img_rect;
+    _img_anchor;
+
 }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

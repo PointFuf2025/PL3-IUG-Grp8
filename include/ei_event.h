@@ -67,7 +67,8 @@ typedef enum {
     ei_mod_alt = 0x00004,         ///< The "alternate" key at the left of the space bar.
     ei_mod_meta_left = 0x00008,   ///< The "meta" (command) key at the left of the space bar.
     ei_mod_meta_right = 0x00010,  ///< The "meta" (command) key at the right of the space bar.
-    ei_mod_alt_grad = 0x00040     ///< The "alternate" key at the right of the space bar.
+    ei_mod_alt_grad = 0x00040,    ///< The "alternate" key at the right of the space bar.
+    ei_mod_espace = 0x00050
 } ei_modifier_key_t;
 
 /**
