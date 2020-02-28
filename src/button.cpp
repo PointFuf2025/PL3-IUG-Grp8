@@ -74,8 +74,8 @@ void Button::draw(surface_t surface,
             clipper->size.height() =  clipper->size.height() - 10;
             linked_point_t rect_full = rounded_frame(*clipper, _corner_radius-5, BT_FULL);
 
-            draw_polygon(surface, rect_top, lgrey, clipper);
-            draw_polygon(surface, rect_bottom, dgrey, clipper);
+            draw_polygon(surface, rect_top, lgrey, NULL);
+            draw_polygon(surface, rect_bottom, dgrey, NULL);
             draw_polygon(surface, rect_full, _color, clipper);
 
             // text
