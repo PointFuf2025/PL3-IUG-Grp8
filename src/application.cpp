@@ -32,7 +32,8 @@ void Application::run()
     _root_widget->draw(_surface, _surface_offScreen, NULL);
 
     //faire une boucle pour actualiser les widget et les redessiner.
-    // Wait for a key press.
+    // Wait for a key pre(0.000000, 0.000000)
+
     while (running == EI_TRUE) {
         hw_surface_update_rects(rect_to_update); //e used for dynamic arrays
         rect_to_update.empty();

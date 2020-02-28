@@ -57,19 +57,22 @@ void Placer::configure (Widget*    widget,
 {
 
     float _rel_x = (rel_x==nullptr) ? 0.0 : *rel_x ;
-    float _rel_y = (rel_y==NULL) ? 0.0 : *rel_y ;
-    float _rel_width = (rel_width==NULL) ? 0.0 : *rel_width ;
-    float _rel_height = (rel_height==NULL) ? 0.0 : *rel_height ;
-    int _x = (x==NULL) ? 0.0 : *x ;
-    int _y = (y==NULL) ? 0.0 : *y ;
-    int _width = (width==NULL) ? 0.0 : *width ;
-    int _height = (height==NULL) ? 0.0 : *height ;
+    float _rel_y = (rel_y==nullptr) ? 0.0 : *rel_y ;
+    float _rel_width = (rel_width==nullptr) ? 0.0 : *rel_width ;
+    float _rel_height = (rel_height==nullptr) ? 0.0 : *rel_height ;
+    int _x = (x==nullptr) ? 0.0 : *x ;
+    int _y = (y==nullptr) ? 0.0 : *y ;
+    int _width = (width==nullptr) ? widget->getRequestedSize().width(): *width ;
+    int _height = (height==nullptr) ? widget->getRequestedSize().height() : *height ;
+     printf("_width et _height = %d, %d", widget->getRequestedSize().width(), widget->getRequestedSize().height());
+
+
     Widget *parent = widget->getParent() ;
     Point p ;
     Size s ;
     s.width() = _rel_x * parent->getScreenLocation().size.width() + _width ;
     s.height() = _rel_y * parent->getScreenLocation().size.height() + _height ;
-    anchor_t _anchor = (anchor ==NULL)? ei_anc_northwest : *anchor ;
+    anchor_t _anchor = (anchor ==nullptr)? ei_anc_northwest : *anchor ;
     switch(_anchor) {
 
     case (ei_anc_northwest) :

@@ -6,6 +6,9 @@ Widget::Widget(const widgetclass_name_t& class_name, Widget* parent)
 {
    name = class_name;
    this->parent = parent;
+   if(parent != NULL){
+    parent->children.push_back(this);
+   }
 
 }
 

@@ -65,7 +65,13 @@ void Frame::configure (Size*           requested_size,
                     Rect*          img_rect,
                     anchor_t*       img_anchor){
 
-       pick_color = (color == nullptr)? default_background_color : *color;
+        this->requested_size = *requested_size;
+        if(parent == NULL){
+            screen_location.size = *requested_size;
+            screen_location.top_left = Point(0,0);
+        }
+
+        _color = (color == nullptr)? default_background_color : *color;
        _border_width = border_width == nullptr? 0 : *border_width;
         _relief = relief == nullptr? ei_relief_none : *relief ;
 
@@ -84,6 +90,8 @@ void Frame::configure (Size*           requested_size,
            _img = img;
            _img_rect = *img_rect ;
            _anchor = img_anchor == nullptr? ei_anc_center : *img_anchor;
+       }else{
+           _img = nullptr;
        }
     }
 
@@ -100,7 +108,21 @@ void Frame::draw (surface_t surface,
              _border_rect = Rect(Point(location.x()+_border_width, location.y() + _border_width), size);
              _border_rect.
     }*/
+        if(_text == NULL && _img == NULL){
+            linked_point_t points;
+            Size size_rect = screen_location.size;
+            Point p1 = screen_location.top_left;
 
+            Point p2 = Point(p1.x() + size_rect.width(), p1.y());
+            Point p3 = Point(p1.x() + size_rect.width(), p1.y() + size_rect.height());
+            Point p4 = Point(p1.x(), p1.y() + size_rect.height());
+            points.push_back(p1);
+            points.push_back(p2);
+            points.push_back(p3);
+            points.push_back(p4);
+            draw_polygon(surface, points, _color, clipper);
+
+        }
 
         if(_text != NULL){
             surface_t s_text = hw_text_create_surface((*_text), _text_font, &_text_color);
@@ -140,7 +162,7 @@ void Frame::draw (surface_t surface,
                 ei_copy_subsurface(surface, s_text, &test , clipper->size, EI_TRUE );
             }
         }
-        if(&_img != NULL){
+        if(_img != NULL){
             Size _img_size = hw_surface_get_size(_img);
             switch (_anchor) {
             case ei_anc_none:
@@ -179,6 +201,7 @@ void Frame::draw (surface_t surface,
                 ei_copy_subsurface(surface, _img, &test, clipper->size, EI_TRUE);
                 }
         }
+
 
         for(Widget* w : children) {
             w->draw(surface, pick_surface, clipper);
