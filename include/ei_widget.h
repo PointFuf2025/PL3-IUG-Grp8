@@ -266,7 +266,7 @@ public:
 
 protected:
         Size            _requested_size;
-        const color_t   _color;
+        color_t   _color;
         int             _border_width;
         int             _corner_radius;
         relief_t        _relief;

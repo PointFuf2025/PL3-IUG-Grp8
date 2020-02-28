@@ -1,7 +1,10 @@
 #include <ei_widget.h>
 
 namespace ei {
+Button::Button(Widget* parent) : Widget("button", parent){
+}
 
+Button::~Button(){}
 
 void Button::configure (Size*            requested_size,
                         const color_t*   color,
@@ -78,7 +81,7 @@ Button Button::operator =(Button button) {
     screen_location = button.screen_location ;
     content_rect = button.content_rect ;
     _requested_size = button._requested_size;
-//    _color = button._color;
+    _color = button._color;
     _border_width;
     _corner_radius;
     _relief;

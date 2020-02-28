@@ -1,7 +1,9 @@
 #include "ei_eventmanager.h"
 #include "ei_application.h"
 
+
 namespace ei {
+ EventManager::EventManager(){}
 
     /**
      * \brief	Binds a callback to an event type and a widget or a tag.
