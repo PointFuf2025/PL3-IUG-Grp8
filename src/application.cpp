@@ -1,17 +1,19 @@
 #include "ei_application.h"
 
 namespace ei {
+Application* Application::instance=nullptr;
 Application::Application(Size* main_window_size)
 {
-    Application* Application::instance=nullptr;
+
     // Init acces to hardware.
     hw_init();
     default_font = hw_text_font_create(default_font_filename, font_default_size);
 
     // Create the main window.
-    surface_t main_window = hw_create_window(&main_window_size, EI_FALSE);
-
-    *root_widget=new Frame(main_window);
+    surface_t main_window = hw_create_window(main_window_size, EI_FALSE);
+    _surface = main_window ;
+    _surface_offScreen = hw_surface_create(_surface, main_window_size) ;
+    _root_widget = new Frame(NULL);
     linked_rect_t list;
     rect_to_update = list;
 
@@ -19,20 +21,20 @@ Application::Application(Size* main_window_size)
 
 }
 
-Application::root_widget()
+Frame* Application::root_widget()
 {
-    return root_widget;
+    return _root_widget;
 }
 
-Application::run()
+void Application::run()
 {
     running=EI_TRUE;
-    draw(root_widget());
+    _root_widget->draw(_surface, _surface_offScreen, NULL);
 
     //faire une boucle pour actualiser les widget et les redessiner.
     // Wait for a key press.
     while (running == EI_TRUE) {
-        hw_surface_update_rects(rect_to_update);
+        hw_surface_update_rects(rect_to_update); //e used for dynamic arrays
         rect_to_update.empty();
         Event* event = hw_event_wait_next();
         if(event->type == ei_ev_keydown)
@@ -40,26 +42,26 @@ Application::run()
     }
 
 
-    ~Application();
+//    ~Application();
 
 
     //dans run il faut parcourir tout les widget et les dessiner une fois, ensuite redessiner que ceux qui sont update en parcourant les enfants
     // c'est aux enfant de le faire, run n'appelle qu'une fois draw sur la racine.
 
 }
-Application::quit_request()
+void Application::quit_request()
 {
     running = EI_FALSE;
 }
 
-Application::invalidate_rect(const Rect &rect)
+void Application::invalidate_rect(const Rect &rect)
 {
     rect_to_update.push_back(rect);
 }
 
 Application::~Application()
 {
-    delete rect_to_update;
+    delete _root_widget  ;
     // Free hardware resources.
     hw_quit();
 }

@@ -39,37 +39,31 @@ void Button::configure (Size*            requested_size,
                 }
 
 
-void Button::draw(ei_surface_t surface,
-             Rect* clipper,
-             float _corner_radius,
-             const char* text)
+void Button::draw(surface_t surface,
+             surface_t pick_surface,
+             Rect* clipper)
             {
-            ei_color_t lgrey = { 0xcf, 0xcf, 0xcf, 0xff };
-            ei_color_t dgrey = { 0x6f, 0x6f, 0x6f, 0xff };
+            color_t lgrey = { 0xcf, 0xcf, 0xcf, 0xff };
+            color_t dgrey = { 0x6f, 0x6f, 0x6f, 0xff };
 
-            ei_linked_point_t* rect_top = rounded_frame(&clipper, _corner_radius, BT_TOP);
-            ei_linked_point_t* rect_bottom = rounded_frame(&clipper, _corner_radius, BT_BOTTOM);
+
+            linked_point_t rect_bottom = rounded_frame(*clipper, _corner_radius, BT_BOTTOM);
+            linked_point_t rect_top = rounded_frame(*clipper, _corner_radius, BT_TOP);
             clipper->top_left.x() +=5;
             clipper->top_left.y() +=5;
-            clipper->size.width() -= 10;
+            clipper->size.width() -=10;
             clipper->size.height() -=10;
-            //clipper.top_left.x += 5;
-            //clipper.top_left.y += 5;
-            //clipper.size.width  -= 10;
-            //clipper.size.height -= 10;
-            ei_linked_point_t* rect_full = rounded_frame(&clipper, _corner_radius-5, BT_FULL);
+            linked_point_t rect_full = rounded_frame(*clipper, _corner_radius-5, BT_FULL);
 
-            ei_draw_polygon(surface, rect_top, lgrey);
-            ei_draw_polygon(surface, rect_bottom, dgrey);
-            ei_draw_polygon(surface, rect_full, _color);
+            draw_polygon(surface, rect_top, lgrey, clipper);
+            draw_polygon(surface, rect_bottom, dgrey, clipper);
+            draw_polygon(surface, rect_full, _color, clipper);
 
             // text
-            ei_font_t font = hw_text_font_create(ei_default_font_filename, ei_font_default_size);
-            int width, height;
-            hw_text_compute_size(_text,font,&width,&height);
-            ei_point_t pos = clipper->top_left;
-            pos.x += (clipper->size.width() - width) / 2.f;
-            pos.y += (clipper->size.height() - height) / 2.f;
-            ei_draw_text(surface, &pos, _text, _text_font, _text_color);
+            hw_text_compute_size(_text,_text_font,_requested_size);
+            Point pos = clipper->top_left;
+            pos.x() += (clipper->size.width() - _requested_size.width()) / 2.f;
+            pos.y() += (clipper->size.height() - _requested_size.height()) / 2.f;
+            draw_text(surface, &pos, _text, _text_font, &_text_color);
             }
 }

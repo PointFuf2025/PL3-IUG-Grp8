@@ -100,10 +100,11 @@ public:
 private:
     static Application *instance;
 protected:
-    Frame* root_widget;
+    Frame* _root_widget ;
     linked_rect_t rect_to_update;
     bool_t running;
-
+    surface_t _surface ;
+    surface_t _surface_offScreen ;
 };
 
 }
