@@ -61,8 +61,12 @@ set(EI_SRC
         src/ei_draw.cpp
         src/frame.cpp
         src/button.cpp
-        src/toplevel.cpp
+        #src/toplevel.cpp
         src/application.cpp
+        src/widget.cpp
+        src/placer.cpp
+        src/geometrymanager.cpp
+
         )
 add_library(ei ${EI_SRC})
 

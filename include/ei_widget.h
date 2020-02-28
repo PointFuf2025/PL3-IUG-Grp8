@@ -87,6 +87,10 @@ public:
         screen_location.top_left = p ;
     }
 
+    Size getRequestedSize() {
+        return requested_size;
+    }
+
 protected:
     widgetclass_name_t name; ///< The string name of this class of widget.
 
@@ -195,10 +199,11 @@ protected:
     font_t      _text_font;
     color_t     _text_color;
     anchor_t    _anchor;
-    surface_t   _img;
+    surface_t*   _img;
     Rect        _img_rect;
     int         _border_width;
     Rect        _border_rect;
+    color_t     _color;
 
 };
 
