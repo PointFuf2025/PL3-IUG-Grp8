@@ -76,6 +76,15 @@ public:
 
     Widget *getParent() const;
 
+    Rect getScreenLocation() {
+        return screen_location ;
+    }
+
+    void setScreenLocation(Point p, Size s) {
+        screen_location.size = s ;
+        screen_location.top_left = p ;
+    }
+
 protected:
     widgetclass_name_t name; ///< The string name of this class of widget.
 
@@ -119,6 +128,7 @@ class Frame : public Widget
 public:
 
     Frame(Widget* parent);
+
 
     virtual ~Frame();
 
