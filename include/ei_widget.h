@@ -265,7 +265,6 @@ public:
 
 
 protected:
-        Size            _requested_size;
         color_t   _color;
         int             _border_width;
         int             _corner_radius;
