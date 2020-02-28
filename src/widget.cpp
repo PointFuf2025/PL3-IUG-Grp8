@@ -11,5 +11,8 @@ Widget::Widget(const widgetclass_name_t& class_name, Widget* parent)
 
 Widget::~Widget(){}
 
+void Widget::geomnotify(Rect rect) {}
+void Widget::draw(surface_t surface, surface_t pick_surface, Rect *clipper) {}
+
 
 }

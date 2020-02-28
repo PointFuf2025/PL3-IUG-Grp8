@@ -74,7 +74,9 @@ public:
     Widget* pick(uint32_t id);
     uint32_t getPick_id() const;
 
-    Widget *getParent() const;
+    Widget *getParent() const {
+        return parent;
+     }
 
     Rect getScreenLocation() {
         return screen_location ;
@@ -131,8 +133,9 @@ public:
 
 
     virtual ~Frame();
+    void geomnotify (Rect rect);
 
-    virtual void draw (surface_t surface,
+    void draw (surface_t surface,
                        surface_t pick_surface,
                        Rect*     clipper);
 

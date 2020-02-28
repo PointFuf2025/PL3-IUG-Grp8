@@ -56,6 +56,9 @@ class Placer : public GeometryManager
 {
 public:
 
+    Placer();
+    virtual ~Placer();
+
     /**
      * \brief Configures the geometry of a widget using the "placer" geometry manager.
      *    If the widget was already managed by another geometry manager, then it is first

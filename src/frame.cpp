@@ -91,9 +91,7 @@ void Frame::draw (surface_t surface,
                            surface_t pick_surface,
                            Rect*     clipper){
         Point test = Point();
-        surface_t s_text;
-        s_text = hw_text_create_surface(*(_text), _text_font, &_text_color);
-        Size stext_size = hw_surface_get_size(s_text);
+
         Point location = screen_location.top_left;
         Size size = screen_location.size;
         /*switch(_relief){
@@ -103,39 +101,39 @@ void Frame::draw (surface_t surface,
              _border_rect.
     }*/
 
-        switch (_anchor) {
-        case ei_anc_none:
-            break;
-        case ei_anc_center:
-            test = Point(requested_size.width() - stext_size.width()/2, requested_size.height()- stext_size.height()/2);
-            break;
-        case ei_anc_north:
-            test = Point(requested_size.width()-stext_size.width()/2, 0);
-            break;
-        case ei_anc_northeast:
-            test = Point(requested_size.width() - stext_size.width(), 0);
-            break;
-        case ei_anc_northwest:
-            test = Point(0, 0);
-            break;
-        case ei_anc_east:
-            test = Point(requested_size.width() - stext_size.width(), requested_size.height() - stext_size.height()/2);
-            break;
-        case ei_anc_south:
-            test = Point(requested_size.width() - stext_size.width()/2, requested_size.height()-stext_size.height());
-            break;
-        case ei_anc_southeast:
-            test = Point(requested_size.width() - stext_size.width(), requested_size.height()-stext_size.height());
-            break;
-        case ei_anc_southwest:
-            test = Point(0, requested_size.height() - stext_size.width());
-            break;
-        case ei_anc_west:
-            test = Point(0, requested_size.height()-stext_size.height()/2);
-            break;
-        }
 
         if(_text != NULL){
+            surface_t s_text = hw_text_create_surface((*_text), _text_font, &_text_color);
+            Size stext_size = hw_surface_get_size(s_text);
+            switch (_anchor) {
+            case ei_anc_center:
+                test = Point(requested_size.width() - stext_size.width()/2, requested_size.height()- stext_size.height()/2);
+                break;
+            case ei_anc_north:
+                test = Point(requested_size.width()-stext_size.width()/2, 0);
+                break;
+            case ei_anc_northeast:
+                test = Point(requested_size.width() - stext_size.width(), 0);
+                break;
+            case ei_anc_northwest:
+                test = Point(0, 0);
+                break;
+            case ei_anc_east:
+                test = Point(requested_size.width() - stext_size.width(), requested_size.height() - stext_size.height()/2);
+                break;
+            case ei_anc_south:
+                test = Point(requested_size.width() - stext_size.width()/2, requested_size.height()-stext_size.height());
+                break;
+            case ei_anc_southeast:
+                test = Point(requested_size.width() - stext_size.width(), requested_size.height()-stext_size.height());
+                break;
+            case ei_anc_southwest:
+                test = Point(0, requested_size.height() - stext_size.width());
+                break;
+            case ei_anc_west:
+                test = Point(0, requested_size.height()-stext_size.height()/2);
+                break;
+            }
             if(clipper==NULL)
                 draw_text(surface, &test, *(_text), _text_font, &_text_color);
             else{
@@ -143,6 +141,38 @@ void Frame::draw (surface_t surface,
             }
         }
         if(&_img != NULL){
+            Size _img_size = hw_surface_get_size(_img);
+            switch (_anchor) {
+            case ei_anc_none:
+                break;
+            case ei_anc_center:
+                test = Point(requested_size.width() - _img_size.width()/2, requested_size.height()- _img_size.height()/2);
+                break;
+            case ei_anc_north:
+                test = Point(requested_size.width()-_img_size.width()/2, 0);
+                break;
+            case ei_anc_northeast:
+                test = Point(requested_size.width() - _img_size.width(), 0);
+                break;
+            case ei_anc_northwest:
+                test = Point(0, 0);
+                break;
+            case ei_anc_east:
+                test = Point(requested_size.width() - _img_size.width(), requested_size.height() - _img_size.height()/2);
+                break;
+            case ei_anc_south:
+                test = Point(requested_size.width() - _img_size.width()/2, requested_size.height()-_img_size.height());
+                break;
+            case ei_anc_southeast:
+                test = Point(requested_size.width() - _img_size.width(), requested_size.height()-_img_size.height());
+                break;
+            case ei_anc_southwest:
+                test = Point(0, requested_size.height() - _img_size.width());
+                break;
+            case ei_anc_west:
+                test = Point(0, requested_size.height()-_img_size.height()/2);
+                break;
+            }
             if(clipper==NULL)
                 ei_copy_surface(surface, _img, &test, EI_TRUE);
             else{
@@ -155,4 +185,8 @@ void Frame::draw (surface_t surface,
         }
 
         }
+
+void Frame::geomnotify (Rect rect){
+    this->setScreenLocation(rect.top_left, rect.size);
+}
 }

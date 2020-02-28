@@ -53,93 +53,99 @@ void Placer::configure (Widget*    widget,
                 float*     rel_x,
                 float*     rel_y,
                 float*     rel_width,
-                float*     rel_height){
-    *rel_x = (rel_x==NULL) ? 0.0 : *rel_x ;
-    *rel_y = (rel_y==NULL) ? 0.0 : *rel_y ;
-    *rel_width = (rel_width==NULL) ? 0.0 : *rel_width ;
-    *rel_height = (rel_height==NULL) ? 0.0 : *rel_height ;
-    *x = (x==NULL) ? 0.0 : *x ;
-    *y = (y==NULL) ? 0.0 : *y ;
-    *width = (rel_width==NULL) ? 0.0 : *width ;
-    *height = (rel_height==NULL) ? 0.0 : *height ;
+                float*     rel_height)
+{
+
+    float _rel_x = (rel_x==nullptr) ? 0.0 : *rel_x ;
+    float _rel_y = (rel_y==NULL) ? 0.0 : *rel_y ;
+    float _rel_width = (rel_width==NULL) ? 0.0 : *rel_width ;
+    float _rel_height = (rel_height==NULL) ? 0.0 : *rel_height ;
+    int _x = (x==NULL) ? 0.0 : *x ;
+    int _y = (y==NULL) ? 0.0 : *y ;
+    int _width = (width==NULL) ? 0.0 : *width ;
+    int _height = (height==NULL) ? 0.0 : *height ;
     Widget *parent = widget->getParent() ;
     Point p ;
     Size s ;
-    s.width() = *rel_x * parent->getScreenLocation().size.width() + *width ;
-    s.height() = *rel_y * parent->getScreenLocation().size.height() + *height ;
-    switch(*anchor) {
+    s.width() = _rel_x * parent->getScreenLocation().size.width() + _width ;
+    s.height() = _rel_y * parent->getScreenLocation().size.height() + _height ;
+    anchor_t _anchor = (anchor ==NULL)? ei_anc_northwest : *anchor ;
+    switch(_anchor) {
 
     case (ei_anc_northwest) :
-         case( ei_anc_none) :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y() ;
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x() ;
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y() ;
         break ;
     case(ei_anc_center) :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x()
                 - 1/2*widget->getScreenLocation().size.width() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y()
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y()
                 - 1/2*widget->getScreenLocation().size.height();
         break ;
     case (ei_anc_north) :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x()
                 - 1/2*widget->getScreenLocation().size.width() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y() ;
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y() ;
 
         break ;
     case (ei_anc_northeast) :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x()
                 - widget->getScreenLocation().size.width() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y() ;
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y() ;
         break ;
     case (ei_anc_east) :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x()
                 - widget->getScreenLocation().size.width() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y()
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y()
                 - 1/2 * widget->getScreenLocation().size.height() ;
         break ;
     case (ei_anc_southeast) :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x()
                 - widget->getScreenLocation().size.width() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y()
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y()
                 - widget->getScreenLocation().size.height() ;
 
         break ;
     case ei_anc_south :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x()
                 - 1/2* widget->getScreenLocation().size.width() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y()
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y()
                 - widget->getScreenLocation().size.height() ;
         break ;
     case ei_anc_southwest :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x() ;
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y()
                 - widget->getScreenLocation().size.height() ;
         break ;
     case ei_anc_west :
-        p.x() = *rel_x * parent->getScreenLocation().size.width() +
-                *x + parent->getScreenLocation().top_left.x() ;
-        p.y() = *rel_y * parent->getScreenLocation().size.height() +
-                *y + parent->getScreenLocation().top_left.y()
+        p.x() = _rel_x * parent->getScreenLocation().size.width() +
+                _x + parent->getScreenLocation().top_left.x() ;
+        p.y() = _rel_y * parent->getScreenLocation().size.height() +
+                _y + parent->getScreenLocation().top_left.y()
                 - 1/2* widget->getScreenLocation().size.height() ;
         break ;
     }
-    widget->setScreenLocation(p,s) ;
+    widget->geomnotify(Rect(p,s));
+    //widget->setScreenLocation(p,s) ;
 }
+
+void Placer::run(Widget *widget) {}
+void Placer::release(Widget *widget) {}
 }
 
