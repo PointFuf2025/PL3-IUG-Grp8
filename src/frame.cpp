@@ -42,7 +42,18 @@ namespace ei{
      *                      when the size of the widget is bigger than the size of the image.
      *                      De  de  n’utiliser  qu’une  sous-partie  de  l’image, faults to \ref ei_anc_center.
      */
-    void Frame::configure (Size*           requested_size,
+
+
+Frame::Frame(Widget *parent) : Widget("Frame", parent)
+{
+    //this->parent = parent;
+}
+
+Frame::~Frame(){}
+
+
+
+void Frame::configure (Size*           requested_size,
                     const color_t*  color,
                     int*            border_width,
                     relief_t*       relief,
@@ -76,7 +87,7 @@ namespace ei{
        }
     }
 
-    void Frame::draw (surface_t surface,
+void Frame::draw (surface_t surface,
                            surface_t pick_surface,
                            Rect*     clipper){
         Point test = Point();

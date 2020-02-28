@@ -1,6 +1,9 @@
 #include "ei_geometrymanager.h"
 
 namespace ei  {
+Placer::Placer() {}
+
+Placer::~Placer() {}
 /**
  * \brief Configures the geometry of a widget using the "placer" geometry manager.
  *    If the widget was already managed by another geometry manager, then it is first
