@@ -4,6 +4,11 @@
 
 
 namespace ei {
+
+
+Toplevel::Toplevel(Widget *parent) : Widget("top level", parent) {}
+
+Toplevel::~Toplevel() {}
 /**
  * @brief   Configures the attributes of widgets of the class "toplevel".
  *
@@ -31,23 +36,29 @@ void Toplevel::configure(Size *requested_size,
                     Size *min_size) {
 
 
-    this->requested_size = requested_size->empty() ? Size(320,240) :
-                                                       *requested_size ;
-    pick_color = (color == nullptr)? default_background_color : *color;
+    this->requested_size = requested_size->empty() ? Size(320,240) : *requested_size ;
+    if (parent ==NULL) {
+        screen_location.size = *requested_size;
+        screen_location.top_left = Point(0,0);
+    }else{
+        screen_location.size = parent->getRequestedSize() ;
+//        screen_location.top_left =
+    }
+    _color = (color == nullptr)? default_background_color : *color;
     _border_with = border_width==NULL ? 4: *border_width ;
     _title = (title==NULL) ? "Toplevel" : *title;
     _closable = closable==NULL ? EI_TRUE : *closable ;
-    if (_closable==EI_TRUE) {
-        surface_t clos;
-        Size s_clos ;
-        clos = hw_image_load(DATA_DIR"cross.png") ;
-        s_clos = hw_surface_get_size(clos) ;
-        children.push_back(this) ;
+//    if (_closable==EI_TRUE) {
+//        surface_t clos;
+//        Size s_clos ;
+//        clos = hw_image_load(DATA_DIR"cross.png") ;
+//        s_clos = hw_surface_get_size(clos) ;
+//        children.push_back(this) ;
 //        children[0]->configure(&s_clos, &default_banner_color, NULL, NULL, NULL,
 //                                  NULL, NULL, NULL, NULL, NULL, NULL, clos, NULL, NULL);
-    }
+//    }
     _resizable = (resizable==NULL) ? ei_axis_both : *resizable ;
-    _min_size = min_size->empty() ? Size(160,120) : *min_size ;
+    _min_size = min_size==NULL ? Size(160,120) : *min_size ;
 }
 
 /**
@@ -63,32 +74,54 @@ void Toplevel::configure(Size *requested_size,
 void Toplevel::draw(surface_t surface,
                     surface_t pick_surface,
                     Rect *clipper){
-    Size surface_size, s_topl_ps = hw_surface_get_size(surface);
-    linked_point_t s_pos ;
+    Size s_topl_ps = hw_surface_get_size(pick_surface),
+            s_topl_s = hw_surface_get_size(surface) ;
+    linked_point_t frame_topl ;
+    if (clipper==NULL) {
+        clipper = &screen_location ;
+    }
 
-    if (clipper!=NULL) {
-        surface_size = clipper->size ;
-        s_pos.push_front(clipper->top_left);
-    }else{
-        surface_size = s_topl_ps ;
-        s_pos.push_front(Point(0,0)) ;
-    }
-    s_pos.push_front(Point(s_pos.front().x() + (int)surface_size.width(), s_pos.front().y() )) ;
-    s_pos.push_front(Point(s_pos.front().x(), s_pos.front().y()+ (int)surface_size.height())) ;
-    s_pos.push_front(Point(s_pos.front().x() - (int)surface_size.width(), s_pos.front().y())) ;
+    frame_topl = rounded_frame(*clipper, 15.0, BT_FULL);
+    Point p = screen_location.top_left ;
     color_t white = {255,255,255,255} ;
-    Point p(0,0) ;
+    color_t color_offscreen = {0,0,255,255} ;
+    surface_t s_bis = hw_surface_create(surface, &s_topl_s) ;
+    surface_t ps_bis = hw_surface_create(surface, &s_topl_ps) ;
     surface_t s_text = hw_text_create_surface(_title, default_font, &white) ;
-    draw_polygon(surface,s_pos,default_background_color,NULL);
-    ei_copy_surface(surface, s_text, &p, EI_FALSE) ;
+    Size si_text = hw_surface_get_size(s_text) ;
+    hw_surface_lock(s_bis);
+    hw_surface_lock(ps_bis);
+    draw_polygon(s_bis, frame_topl, default_banner_color, &screen_location);
+
+    draw_polygon(ps_bis, frame_topl, color_offscreen, &screen_location);
+    ei_copy_surface(pick_surface, s_bis, &p, EI_TRUE) ;
+    p.x()+=5 ;
+    p.y()+=5 ;
     if (_closable==EI_TRUE) {
-        surface_t clos;
-        Size s_clos ;
-        clos = hw_image_load(DATA_DIR"cross.png") ;
-        s_clos = hw_surface_get_size(clos) ;
-        ei_copy_surface(surface, clos, &p, EI_FALSE) ;
+        surface_t clos = hw_image_load(DATA_DIR"cross.png") ;;
+        Size s_clos = hw_surface_get_size(clos) ;
+        ei_copy_surface(s_bis, clos, &p, EI_TRUE) ;
+        p.x() += s_clos.width() ;
     }
+
+
+    draw_text(s_bis, &p, _title, default_font, &_color) ;
+    ei_copy_surface(surface, s_bis, &(p =Point (0,0)), EI_TRUE) ;
+    hw_surface_unlock(s_bis) ;
+    hw_surface_unlock(ps_bis) ;
+
+    clipper->size.width() -= 2*_min_size.x() ;
+    clipper->size.height() -= _min_size.y() - si_text.height() ;
+    clipper->top_left.x() += _min_size.x() ;
+    clipper->top_left.y() += _min_size.y() ;
     fill(pick_surface, &pick_color, EI_FALSE) ;
+    if (content_rect==NULL) {
+        content_rect = &screen_location ;
+    }
+
+    for(Widget* w : children) {
+        w->draw(surface, pick_surface, clipper);
+    }
 
 }
 

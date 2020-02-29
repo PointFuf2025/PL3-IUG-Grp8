@@ -319,12 +319,12 @@ public:
                     axis_set_t*     resizable,
                     Size*           min_size);
 private :
-    Size requested_size ;
     int _border_with ;
     const char *_title ;
     bool_t _closable ;
     axis_set_t _resizable ;
     Size _min_size ;
+    color_t _color ;
 
 };
 

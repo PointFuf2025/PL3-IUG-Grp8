@@ -64,7 +64,7 @@ void Placer::configure (Widget*    widget,
     int _y = (y==nullptr) ? 0.0 : *y ;
     int _width = (width==nullptr) ? widget->getRequestedSize().width(): *width ;
     int _height = (height==nullptr) ? widget->getRequestedSize().height() : *height ;
-     printf("_width et _height = %d, %d", widget->getRequestedSize().width(), widget->getRequestedSize().height());
+//     printf("_width et _height = %d, %d", widget->getRequestedSize().width(), widget->getRequestedSize().height());
 
 
     Widget *parent = widget->getParent() ;
