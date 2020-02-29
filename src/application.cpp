@@ -1,6 +1,8 @@
 #include "ei_application.h"
 
+
 namespace ei {
+font_t  default_font ;
 Application* Application::instance=nullptr;
 Application::Application(Size* main_window_size)
 {

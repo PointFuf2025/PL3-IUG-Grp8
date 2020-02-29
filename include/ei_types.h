@@ -223,7 +223,7 @@ typedef void* font_t;
 /**
  * @brief The default font used in widgets.
  */
-static font_t default_font = nullptr;
+extern font_t default_font ;
 
 static const int font_default_size = 22;  ///< Default font color
 static const color_t font_default_color = {0x00, 0x00, 0x00, 0xff};
