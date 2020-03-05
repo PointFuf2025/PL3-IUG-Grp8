@@ -76,26 +76,30 @@ void Toplevel::draw(surface_t surface,
                     Rect *clipper){
     Size s_topl_ps = hw_surface_get_size(pick_surface),
             s_topl_s = hw_surface_get_size(surface) ;
-    linked_point_t frame_topl ;
+    surface_t s_bis = hw_surface_create(surface, &s_topl_s) ;
+    surface_t ps_bis = hw_surface_create(surface, &s_topl_ps) ;
+    surface_t clos = hw_image_load(DATA_DIR"cross.png") ;;
+    Size s_clos ;
+    linked_point_t frame_topl_up ;
     if (clipper==NULL) {
         clipper = new Rect(screen_location.top_left,
                             screen_location.size)  ;
     }
 
-    frame_topl = rounded_frame(*clipper, 15.0, BT_FULL);
+    frame_topl_up = rounded_frame(Rect (clipper->top_left, Size(clipper->size.width(), clipper->size.height()*2)), 15.0, BT_FULL);
+
     Point p = clipper->top_left ;
     color_t white = {255,255,255,255} ;
     color_t color_offscreen = {0,0,255,255} ;
-    surface_t s_bis = hw_surface_create(surface, &s_topl_s) ;
-    surface_t ps_bis = hw_surface_create(surface, &s_topl_ps) ;
-    surface_t clos = hw_image_load(DATA_DIR"cross.png") ;;
-    Size s_clos ;
 
+    //draw
     hw_surface_lock(s_bis);
     hw_surface_lock(ps_bis);
-    draw_polygon(s_bis, frame_topl, default_banner_color, clipper);
 
-    draw_polygon(ps_bis, frame_topl, color_offscreen, clipper);
+    draw_polygon(s_bis, frame_topl_up, default_banner_color, clipper);
+    draw_polygon(ps_bis, frame_topl_up, color_offscreen, clipper);
+
+
     ei_copy_surface(pick_surface, s_bis, &p, EI_TRUE) ;
     p.x()+=5 ;
     p.y()+=5 ;
@@ -113,8 +117,9 @@ void Toplevel::draw(surface_t surface,
     hw_surface_unlock(s_bis) ;
     hw_surface_unlock(ps_bis) ;
 
+
     content_rect->size.width() = clipper->size.width() - 2*_border_with ;
-    content_rect->size.height() = clipper->size.height() - 14  - s_clos.height() ;
+    content_rect->size.height() = clipper->size.height() - 7  - s_clos.height() - _border_with ;
 
     content_rect->top_left.x() = clipper->top_left.x() + _border_with ;
     content_rect->top_left.y() = clipper->top_left.y() + 7  + s_clos.height()  ;

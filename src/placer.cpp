@@ -60,9 +60,10 @@ void Placer::configure (Widget*    widget,
     Widget *parent = widget->getParent() ;
     Point p ;
     Size s ;
-    s.width() = _rel_x * parent->getScreenLocation().size.width() + _width ;
-    s.height() = _rel_y * parent->getScreenLocation().size.height() + _height ;
+    s.width() = _rel_width * parent->getScreenLocation().size.width() + _width ;
+    s.height() = _rel_height * parent->getScreenLocation().size.height() + _height ;
     anchor_t _anchor = (anchor ==nullptr)? ei_anc_northwest : *anchor ;
+
     switch(_anchor) {
 
     case (ei_anc_northwest) :
