@@ -227,7 +227,7 @@ public:
                        surface_t pick_surface,
                        Rect*     clipper);
                        
-
+    void geomnotify(Rect rect);
 
     /**
      * @brief   Configures the attributes of widgets of the class "button".
@@ -292,6 +292,7 @@ public:
     virtual void draw (surface_t surface,
                        surface_t pick_surface,
                        Rect*     clipper);
+    void geomnotify(Rect rect);
 
     /**
      * @brief   Configures the attributes of widgets of the class "toplevel".

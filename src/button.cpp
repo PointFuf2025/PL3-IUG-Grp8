@@ -63,53 +63,72 @@ void Button::draw(surface_t surface,
             color_t lgrey = { 0xcf, 0xcf, 0xcf, 0xff };
             color_t dgrey = { 0x6f, 0x6f, 0x6f, 0xff };
 
-            if (clipper==NULL) {
-                clipper = &screen_location ;
-            }
-            linked_point_t rect_bottom = rounded_frame(*clipper, _corner_radius, BT_BOTTOM);
-            linked_point_t rect_top = rounded_frame(*clipper, _corner_radius, BT_TOP);
-            clipper->top_left.x() = clipper->top_left.x() + 5;
-            clipper->top_left.y() = clipper->top_left.y()  + 5;
-            clipper->size.width() =  clipper->size.width() - 10;
-            clipper->size.height() =  clipper->size.height() - 10;
-            linked_point_t rect_full = rounded_frame(*clipper, _corner_radius-5, BT_FULL);
+//            if (clipper==NULL) {
+//                clipper = &screen_location ;
+//            }
+//            linked_point_t rect_bottom = rounded_frame(*clipper, _corner_radius, BT_BOTTOM);
+//            linked_point_t rect_top = rounded_frame(*clipper, _corner_radius, BT_TOP);
+//            clipper->top_left.x() = clipper->top_left.x() + 5;
+//            clipper->top_left.y() = clipper->top_left.y()  + 5;
+//            clipper->size.width() =  clipper->size.width() - 10;
+//            clipper->size.height() =  clipper->size.height() - 10;
+//            linked_point_t rect_full = rounded_frame(*clipper, _corner_radius-5, BT_FULL);
 
-            draw_polygon(surface, rect_top, lgrey, NULL);
-            draw_polygon(surface, rect_bottom, dgrey, NULL);
+            if (clipper==NULL) {
+                clipper = new Rect(hw_surface_get_rect(surface)) ;
+            }
+            linked_point_t rect_bottom = rounded_frame(screen_location, _corner_radius, BT_BOTTOM);
+            linked_point_t rect_top = rounded_frame(screen_location, _corner_radius, BT_TOP);
+            screen_location.top_left.x() = screen_location.top_left.x() + 5;
+            screen_location.top_left.y() = screen_location.top_left.y()  + 5;
+            screen_location.size.width() =  screen_location.size.width() - 10;
+            screen_location.size.height() =  screen_location.size.height() - 10;
+            linked_point_t rect_full = rounded_frame(screen_location, _corner_radius-5, BT_FULL);
+
+            draw_polygon(surface, rect_top, lgrey, clipper);
+            draw_polygon(surface, rect_bottom, dgrey, clipper);
             draw_polygon(surface, rect_full, _color, clipper);
 
             // text
             hw_text_compute_size(_text,_text_font,this->requested_size);
-            Point pos = clipper->top_left;
-            pos.x() += (clipper->size.width() - this->requested_size.width()) / 2.f;
-            pos.y() += (clipper->size.height() - this->requested_size.height()) / 2.f;
-            draw_text(surface, &pos, _text, _text_font, &_text_color);
+//            Point pos = clipper->top_left;
+//            pos.x() += (clipper->size.width() - this->requested_size.width()) / 2.f;
+//            pos.y() += (clipper->size.height() - this->requested_size.height()) / 2.f;
+            Point pos = screen_location.top_left;
+            pos.x() += (screen_location.size.width() - this->requested_size.width()) / 2.f;
+            pos.y() += (screen_location.size.height() - this->requested_size.height()) / 2.f;
+
+//            draw_text(surface, &pos, _text, _text_font, &_text_color);
             }
 
-Button Button::operator =(Button button) {
-    name = button.name ;
-    pick_id = button.pick_id ;
-    pick_color = button.pick_color ;
-    parent = button.parent ;
-    children = button.children ;
-    geom_manager = button.geom_manager ;
-//    requested_size = button.requested_size ;
-    screen_location = button.screen_location ;
-    content_rect = button.content_rect ;
-//    _requested_size = button._requested_size;
-    _color = button._color;
-    _border_width;
-    _corner_radius;
-    _relief;
-     _text;
-    _text_font;
-    _text_color;
-    _text_anchor;
-    _img;
-    _img_rect;
-    _img_anchor;
-
+void Button::geomnotify(Rect rect){
+    setScreenLocation(rect.top_left, rect.size);
 }
+
+//Button Button::operator =(Button button) {
+//    name = button.name ;
+//    pick_id = button.pick_id ;
+//    pick_color = button.pick_color ;
+//    parent = button.parent ;
+//    children = button.children ;
+//    geom_manager = button.geom_manager ;
+////    requested_size = button.requested_size ;
+//    screen_location = button.screen_location ;
+//    content_rect = button.content_rect ;
+////    _requested_size = button._requested_size;
+//    _color = button._color;
+//    _border_width;
+//    _corner_radius;
+//    _relief;
+//     _text;
+//    _text_font;
+//    _text_color;
+//    _text_anchor;
+//    _img;
+//    _img_rect;
+//    _img_anchor;
+
+//}
 }
 
 

@@ -34,16 +34,6 @@ Placer::~Placer() {}
  *        1.0 to the height of the master (defaults to 0.0).
  */
 
-//ei_anc_none = 0,   ///< No anchor defined.
-//ei_anc_center,     ///< Anchor in the center.
-//ei_anc_north,      ///< Anchor on the top side, centered horizontally.
-//ei_anc_northeast,  ///< Anchor on the top-right corner.
-//ei_anc_east,       ///< Anchor on the right side, centered vertically.
-//ei_anc_southeast,  ///< Anchor on the bottom-right corner.
-//ei_anc_south,      ///< Anchor on the bottom side, centered horizontally.
-//ei_anc_southwest,  ///< Anchor on the bottom-left corner.
-//ei_anc_west,       ///< Anchor on the left side, centered vertically.
-//ei_anc_northwest
 void Placer::configure (Widget*    widget,
                 anchor_t*  anchor,
                 int*       x,

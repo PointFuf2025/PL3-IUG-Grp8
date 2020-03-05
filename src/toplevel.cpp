@@ -78,51 +78,59 @@ void Toplevel::draw(surface_t surface,
             s_topl_s = hw_surface_get_size(surface) ;
     linked_point_t frame_topl ;
     if (clipper==NULL) {
-        clipper = &screen_location ;
+        clipper = new Rect(screen_location.top_left,
+                            screen_location.size)  ;
     }
 
     frame_topl = rounded_frame(*clipper, 15.0, BT_FULL);
-    Point p = screen_location.top_left ;
+    Point p = clipper->top_left ;
     color_t white = {255,255,255,255} ;
     color_t color_offscreen = {0,0,255,255} ;
     surface_t s_bis = hw_surface_create(surface, &s_topl_s) ;
     surface_t ps_bis = hw_surface_create(surface, &s_topl_ps) ;
-    surface_t s_text = hw_text_create_surface(_title, default_font, &white) ;
-    Size si_text = hw_surface_get_size(s_text) ;
+    surface_t clos = hw_image_load(DATA_DIR"cross.png") ;;
+    Size s_clos ;
+
     hw_surface_lock(s_bis);
     hw_surface_lock(ps_bis);
-    draw_polygon(s_bis, frame_topl, default_banner_color, &screen_location);
+    draw_polygon(s_bis, frame_topl, default_banner_color, clipper);
 
-    draw_polygon(ps_bis, frame_topl, color_offscreen, &screen_location);
+    draw_polygon(ps_bis, frame_topl, color_offscreen, clipper);
     ei_copy_surface(pick_surface, s_bis, &p, EI_TRUE) ;
     p.x()+=5 ;
     p.y()+=5 ;
     if (_closable==EI_TRUE) {
-        surface_t clos = hw_image_load(DATA_DIR"cross.png") ;;
-        Size s_clos = hw_surface_get_size(clos) ;
+        hw_surface_lock(clos);
+        s_clos = hw_surface_get_size(clos) ;
         ei_copy_surface(s_bis, clos, &p, EI_TRUE) ;
-        p.x() += s_clos.width() ;
+        p.x() += s_clos.width() +5 ;
+        hw_surface_unlock(clos);
     }
 
 
     draw_text(s_bis, &p, _title, default_font, &_color) ;
-    ei_copy_surface(surface, s_bis, &(p =Point (0,0)), EI_TRUE) ;
+    ei_copy_surface(surface, s_bis, &(p=Point(0,0)), EI_TRUE) ;
     hw_surface_unlock(s_bis) ;
     hw_surface_unlock(ps_bis) ;
 
-    clipper->size.width() -= 2*_min_size.x() ;
-    clipper->size.height() -= _min_size.y() - si_text.height() ;
-    clipper->top_left.x() += _min_size.x() ;
-    clipper->top_left.y() += _min_size.y() ;
-    fill(pick_surface, &pick_color, EI_FALSE) ;
-    if (content_rect==NULL) {
-        content_rect = &screen_location ;
-    }
+    content_rect->size.width() = clipper->size.width() - 2*_border_with ;
+    content_rect->size.height() = clipper->size.height() - 14  - s_clos.height() ;
+
+    content_rect->top_left.x() = clipper->top_left.x() + _border_with ;
+    content_rect->top_left.y() = clipper->top_left.y() + 7  + s_clos.height()  ;
+
+    linked_point_t rect_content = rounded_frame(*content_rect, 0.0, BT_FULL) ;
+    draw_polygon(surface, rect_content, white, NULL);
+
 
     for(Widget* w : children) {
-        w->draw(surface, pick_surface, clipper);
+        w->draw(surface, pick_surface, content_rect);
     }
 
+}
+
+void Toplevel::geomnotify(Rect rect){
+    this->setScreenLocation(rect.top_left, rect.size);
 }
 
 }
