@@ -74,12 +74,13 @@ void Toplevel::configure(Size *requested_size,
 void Toplevel::draw(surface_t surface,
                     surface_t pick_surface,
                     Rect *clipper){
+
     Size s_topl_ps = hw_surface_get_size(pick_surface),
             s_topl_s = hw_surface_get_size(surface) ;
     surface_t s_bis = hw_surface_create(surface, &s_topl_s) ;
     surface_t ps_bis = hw_surface_create(surface, &s_topl_ps) ;
     surface_t clos = hw_image_load(DATA_DIR"cross.png") ;;
-    Size s_clos ;
+    Size s_clos = hw_surface_get_size(clos)  ;
     linked_point_t frame_topl_up ;
     if (clipper==NULL) {
         clipper = new Rect(screen_location.top_left,
@@ -105,10 +106,11 @@ void Toplevel::draw(surface_t surface,
     p.y()+=5 ;
     if (_closable==EI_TRUE) {
         hw_surface_lock(clos);
-        s_clos = hw_surface_get_size(clos) ;
+        ;
         ei_copy_surface(s_bis, clos, &p, EI_TRUE) ;
         p.x() += s_clos.width() +5 ;
         hw_surface_unlock(clos);
+        p.y() -= 2 ;
     }
 
 
@@ -119,10 +121,10 @@ void Toplevel::draw(surface_t surface,
 
 
     content_rect->size.width() = clipper->size.width() - 2*_border_with ;
-    content_rect->size.height() = clipper->size.height() - 7  - s_clos.height() - _border_with ;
+    content_rect->size.height() = clipper->size.height() - 7  - s_clos.height() - 2*_border_with ;
 
     content_rect->top_left.x() = clipper->top_left.x() + _border_with ;
-    content_rect->top_left.y() = clipper->top_left.y() + 7  + s_clos.height()  ;
+    content_rect->top_left.y() = clipper->top_left.y() + 7  + s_clos.height() + _border_with  ;
 
     linked_point_t rect_content = rounded_frame(*content_rect, 0.0, BT_FULL) ;
     draw_polygon(surface, rect_content, white, NULL);

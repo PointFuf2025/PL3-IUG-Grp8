@@ -45,9 +45,6 @@ void Application::run()
     }
 
 
-//    ~Application();
-
-
     //dans run il faut parcourir tout les widget et les dessiner une fois, ensuite redessiner que ceux qui sont update en parcourant les enfants
     // c'est aux enfant de le faire, run n'appelle qu'une fois draw sur la racine.
 

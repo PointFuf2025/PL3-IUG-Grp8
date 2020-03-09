@@ -96,6 +96,12 @@ public:
         return requested_size;
     }
 
+    Rect getContentRect() {
+        if (content_rect!=NULL)
+            return *content_rect ;
+        return screen_location ;
+    }
+
 protected:
     widgetclass_name_t name; ///< The string name of this class of widget.
 

@@ -66,13 +66,13 @@ void Placer::configure (Widget*    widget,
 
     switch(_anchor) {
 
-    case (ei_anc_northwest) :
+    case ei_anc_northwest :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y() ;
         break ;
-    case(ei_anc_center) :
+    case ei_anc_center :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
                 - 1/2*widget->getScreenLocation().size.width() ;
@@ -80,7 +80,7 @@ void Placer::configure (Widget*    widget,
                 _y + parent->getScreenLocation().top_left.y()
                 - 1/2*widget->getScreenLocation().size.height();
         break ;
-    case (ei_anc_north) :
+    case ei_anc_north :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
                 - 1/2*widget->getScreenLocation().size.width() ;
@@ -88,14 +88,14 @@ void Placer::configure (Widget*    widget,
                 _y + parent->getScreenLocation().top_left.y() ;
 
         break ;
-    case (ei_anc_northeast) :
+    case ei_anc_northeast :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
                 - widget->getScreenLocation().size.width() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y() ;
         break ;
-    case (ei_anc_east) :
+    case ei_anc_east :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
                 - widget->getScreenLocation().size.width() ;
@@ -103,7 +103,7 @@ void Placer::configure (Widget*    widget,
                 _y + parent->getScreenLocation().top_left.y()
                 - 1/2 * widget->getScreenLocation().size.height() ;
         break ;
-    case (ei_anc_southeast) :
+    case ei_anc_southeast :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
                 - widget->getScreenLocation().size.width() ;
@@ -136,7 +136,6 @@ void Placer::configure (Widget*    widget,
         break ;
     }
     widget->geomnotify(Rect(p,s));
-    //widget->setScreenLocation(p,s) ;
 }
 
 void Placer::run(Widget *widget) {}
