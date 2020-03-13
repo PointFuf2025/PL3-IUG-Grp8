@@ -81,9 +81,7 @@ void Button::draw(surface_t surface,
             color_t pick_color;
             Rect rect_draw ;
 
-            if (clipper==NULL) {
-                clipper = new Rect(hw_surface_get_rect(surface)) ;
-            }
+
             linked_point_t rect_bottom = rounded_frame(screen_location, _corner_radius, BT_BOTTOM);
             linked_point_t rect_top = rounded_frame(screen_location, _corner_radius, BT_TOP);
             rect_draw.top_left.x() = screen_location.top_left.x() + 5;
@@ -103,7 +101,7 @@ void Button::draw(surface_t surface,
             pos.x() += (rect_draw.size.width() - this->requested_size.width()) / 2.f;
             pos.y() += (rect_draw.size.height() - this->requested_size.height()) / 2.f;
 
-//            draw_text(surface, &pos, _text, _text_font, &_text_color);
+            draw_text(surface, &pos, _text, _text_font, &_text_color);
             }
 
 void Button::geomnotify(Rect rect){

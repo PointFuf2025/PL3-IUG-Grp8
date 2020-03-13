@@ -102,6 +102,11 @@ public:
     virtual void run (Widget* widget);
 
     virtual void release (Widget* widget);
+private :
+    anchor_t _anchor ;
+    int _x, _y ;
+    float _width, _height, _rel_width, _rel_height ;
+    float _rel_x, _rel_y ;
 };
 
 }

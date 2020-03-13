@@ -46,44 +46,59 @@ void Placer::configure (Widget*    widget,
                 float*     rel_height)
 {
 
-    float _rel_x = (rel_x==nullptr) ? 0.0 : *rel_x ;
-    float _rel_y = (rel_y==nullptr) ? 0.0 : *rel_y ;
-    float _rel_width = (rel_width==nullptr) ? 0.0 : *rel_width ;
-    float _rel_height = (rel_height==nullptr) ? 0.0 : *rel_height ;
-    int _x = (x==nullptr) ? 0.0 : *x ;
-    int _y = (y==nullptr) ? 0.0 : *y ;
-    int _width = (width==nullptr) ? widget->getRequestedSize().width(): *width ;
-    int _height = (height==nullptr) ? widget->getRequestedSize().height() : *height ;
+    if (widget->getGeom() !=NULL) {
+        ;
+    }
+    _rel_x = (rel_x==nullptr) ? 0.0 : *rel_x ;
+    _rel_y = (rel_y==nullptr) ? 0.0 : *rel_y ;
+    _rel_width = (rel_width==nullptr) ? 0.0 : *rel_width ;
+    _rel_height = (rel_height==nullptr) ? 0.0 : *rel_height ;
+    _x = (x==nullptr) ? 0.0 : *x ;
+    _y = (y==nullptr) ? 0.0 : *y ;
+    _width = (width==nullptr) ? widget->getRequestedSize().width(): *width ;
+    _height = (height==nullptr) ? widget->getRequestedSize().height() : *height ;
+    _anchor = (anchor ==nullptr)? ei_anc_northwest : *anchor ;
+
+
 //     printf("_width et _height = %d, %d", widget->getRequestedSize().width(), widget->getRequestedSize().height());
 
 
+    this->run(widget) ;
+}
+
+void Placer::run(Widget *widget) {
     Widget *parent = widget->getParent() ;
     Point p ;
     Size s ;
     s.width() = _rel_width * parent->getScreenLocation().size.width() + _width ;
     s.height() = _rel_height * parent->getScreenLocation().size.height() + _height ;
-    anchor_t _anchor = (anchor ==nullptr)? ei_anc_northwest : *anchor ;
+
+
 
     switch(_anchor) {
 
     case ei_anc_northwest :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
-                _x + parent->getScreenLocation().top_left.x() ;
+                _x + parent->getScreenLocation().top_left.x();
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y() ;
+        //printf("(%f,%f)\n", s.width(), s.height()) ;
         break ;
     case ei_anc_center :
+
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
-                - 1/2*widget->getScreenLocation().size.width() ;
+                - 0.5*s.width() ;
+
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y()
-                - 1/2*widget->getScreenLocation().size.height();
+                - 0.5*s.height();
+       // printf("(%f,%f)\n", s.width(), s.height()) ;
         break ;
     case ei_anc_north :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
-                - 1/2*widget->getScreenLocation().size.width() ;
+                - 0.5*s.width() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y() ;
 
@@ -91,54 +106,59 @@ void Placer::configure (Widget*    widget,
     case ei_anc_northeast :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
-                - widget->getScreenLocation().size.width() ;
+                - s.width() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y() ;
         break ;
     case ei_anc_east :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
-                - widget->getScreenLocation().size.width() ;
+                - s.width() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y()
-                - 1/2 * widget->getScreenLocation().size.height() ;
+                - 0.5 * s.height() ;
         break ;
     case ei_anc_southeast :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
-                - widget->getScreenLocation().size.width() ;
+                - s.width()/*widget->getScreenLocation().size.width()*/ ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y()
-                - widget->getScreenLocation().size.height() ;
+                - s.height()/*widget->getScreenLocation().size.height() */;
 
         break ;
     case ei_anc_south :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x()
-                - 1/2* widget->getScreenLocation().size.width() ;
+                - 0.5* s.width() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y()
-                - widget->getScreenLocation().size.height() ;
+                - s.height() ;
         break ;
     case ei_anc_southwest :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y()
-                - widget->getScreenLocation().size.height() ;
+                - s.height();
         break ;
     case ei_anc_west :
         p.x() = _rel_x * parent->getScreenLocation().size.width() +
                 _x + parent->getScreenLocation().top_left.x() ;
         p.y() = _rel_y * parent->getScreenLocation().size.height() +
                 _y + parent->getScreenLocation().top_left.y()
-                - 1/2* widget->getScreenLocation().size.height() ;
+                - 0.5* s.height() ;
         break ;
     }
     widget->geomnotify(Rect(p,s));
-}
 
-void Placer::run(Widget *widget) {}
-void Placer::release(Widget *widget) {}
+}
+void Placer::release(Widget *widget) {
+    _rel_width = 0.0 ;
+    _rel_height = 0.0 ;
+    _width = 0.0 ;
+    _height = 0.0 ;
+    run(widget) ;
+}
 }
 

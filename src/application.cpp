@@ -37,8 +37,24 @@ void Application::run()
     // Wait for a key pre(0.000000, 0.000000)
 
     while (running == EI_TRUE) {
-        hw_surface_update_rects(rect_to_update); //e used for dynamic arrays
-        rect_to_update.empty();
+        if(!rect_to_update.empty())
+        {
+            std::list<Rect>::iterator it;
+            for(it=rect_to_update.begin();it!=rect_to_update.end();it++)
+            {
+                Rect r = *it;
+                Rect *ptr = &r; //pas sur de ça
+                _root_widget->draw(_surface, _surface_offScreen,ptr); //faire une boucle pour draw tout les rect de la liste?
+
+            }
+
+
+            }
+            hw_surface_update_rects(rect_to_update); //e used for dynamic arrays
+            rect_to_update.clear();
+
+
+
         Event* event = hw_event_wait_next();
         if(event->type == ei_ev_keydown)
             quit_request();

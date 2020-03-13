@@ -102,6 +102,10 @@ public:
         return screen_location ;
     }
 
+    GeometryManager* getGeom() {
+        return geom_manager ;
+    }
+
 protected:
     widgetclass_name_t name; ///< The string name of this class of widget.
 

@@ -59,6 +59,7 @@ void Toplevel::configure(Size *requested_size,
 //    }
     _resizable = (resizable==NULL) ? ei_axis_both : *resizable ;
     _min_size = min_size==NULL ? Size(160,120) : *min_size ;
+    content_rect = new Rect(Point (0,0), *requested_size)  ;
 }
 
 /**
@@ -118,6 +119,7 @@ void Toplevel::draw(surface_t surface,
     ei_copy_surface(surface, s_bis, &(p=Point(0,0)), EI_TRUE) ;
     hw_surface_unlock(s_bis) ;
     hw_surface_unlock(ps_bis) ;
+
 
 
     content_rect->size.width() = clipper->size.width() - 2*_border_with ;
