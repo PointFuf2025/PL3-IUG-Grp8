@@ -46,6 +46,9 @@ void Placer::configure (Widget*    widget,
                 float*     rel_height)
 {
 
+    if (widget->getGeom() !=NULL) {
+        ;
+    }
     _rel_x = (rel_x==nullptr) ? 0.0 : *rel_x ;
     _rel_y = (rel_y==nullptr) ? 0.0 : *rel_y ;
     _rel_width = (rel_width==nullptr) ? 0.0 : *rel_width ;
@@ -55,6 +58,8 @@ void Placer::configure (Widget*    widget,
     _width = (width==nullptr) ? widget->getRequestedSize().width(): *width ;
     _height = (height==nullptr) ? widget->getRequestedSize().height() : *height ;
     _anchor = (anchor ==nullptr)? ei_anc_northwest : *anchor ;
+
+
 //     printf("_width et _height = %d, %d", widget->getRequestedSize().width(), widget->getRequestedSize().height());
 
 
@@ -148,6 +153,12 @@ void Placer::run(Widget *widget) {
     widget->geomnotify(Rect(p,s));
 
 }
-void Placer::release(Widget *widget) {}
+void Placer::release(Widget *widget) {
+    _rel_width = 0.0 ;
+    _rel_height = 0.0 ;
+    _width = 0.0 ;
+    _height = 0.0 ;
+    run(widget) ;
+}
 }
 
