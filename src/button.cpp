@@ -1,5 +1,5 @@
 #include <ei_widget.h>
-
+#include <cmath>
 namespace ei {
 Button::Button(Widget* parent) : Widget("button", parent){
 }
@@ -60,8 +60,25 @@ void Button::draw(surface_t surface,
              surface_t pick_surface,
              Rect* clipper)
             {
-            color_t lgrey = { 0xcf, 0xcf, 0xcf, 0xff };
-            color_t dgrey = { 0x6f, 0x6f, 0x6f, 0xff };
+
+            int lred = std::min(255.0,std::floor(_color.red * 1.5));
+            unsigned char lcolor_red = lred;
+            int lgreen = std::min(255.0,std::floor(_color.green * 1.5));
+            unsigned char lcolor_green = lgreen;
+            int lblue = std::min(255.0,std::floor(_color.blue * 1.5));
+            unsigned char lcolor_blue = lblue;
+
+            int dred = std::floor(_color.red * 0.50);
+            unsigned char dcolor_red = dred;
+            int dgreen = std::floor(_color.green * 0.50);
+            unsigned char dcolor_green = dgreen;
+            int dblue = std::floor(_color.blue * 0.50);
+            unsigned char dcolor_blue = dblue;
+
+            color_t lcolor = { lcolor_red, lcolor_green, lcolor_blue, 255};
+            color_t dcolor = { dcolor_red, dcolor_green , dcolor_blue, 255};
+
+            color_t pick_color;
             Rect rect_draw ;
 
             if (clipper==NULL) {
@@ -75,9 +92,10 @@ void Button::draw(surface_t surface,
             rect_draw.size.height() =  screen_location.size.height() - 10;
             linked_point_t rect_full = rounded_frame(rect_draw, _corner_radius-5, BT_FULL);
 
-            draw_polygon(surface, rect_top, lgrey, clipper);
-            draw_polygon(surface, rect_bottom, dgrey, clipper);
+            draw_polygon(surface, rect_top, lcolor, clipper);
+            draw_polygon(surface, rect_bottom, dcolor, clipper);
             draw_polygon(surface, rect_full, _color, clipper);
+            draw_polygon(pick_surface,rect_full,pick_color,clipper);
 
             // text
             hw_text_compute_size(_text,_text_font,this->requested_size);

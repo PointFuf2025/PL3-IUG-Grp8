@@ -25,8 +25,6 @@ namespace ei {
     {
          if (widget!=NULL && widget->getName()=="Button") {
 
-//             Button button(widget);
-//             button.configure();
         switch (eventtype) {
             case ei_ev_mouse_buttondown:
 //               button.setRelief(ei_relief_sunken);
