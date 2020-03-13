@@ -42,7 +42,9 @@ void Application::run()
             std::list<Rect>::iterator it;
             for(it=rect_to_update.begin();it!=rect_to_update.end();it++)
             {
-                _root_widget->draw(_surface, _surface_offScreen,*it); //faire une boucle pour draw tout les rect de la liste?
+                Rect r = *it;
+                Rect *ptr = &r; //pas sur de ça
+                _root_widget->draw(_surface, _surface_offScreen,ptr); //faire une boucle pour draw tout les rect de la liste?
 
             }
 
@@ -50,7 +52,7 @@ void Application::run()
             }
             hw_surface_update_rects(rect_to_update); //e used for dynamic arrays
             rect_to_update.clear();
-        }
+
 
 
         Event* event = hw_event_wait_next();
